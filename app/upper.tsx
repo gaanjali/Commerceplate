@@ -1,33 +1,29 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import {
-  FaSearch,
-  FaShoppingCart,
-  FaUser,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
+import { useRouter } from "next/navigation"; // Corrected useRouter import for App Router
+import { FaSearch, FaShoppingCart, FaUser, FaBars, FaTimes } from "react-icons/fa";
 
 const Header: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const router = useRouter();
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+    setIsSidebarOpen((prev) => !prev);
+    if (isCartOpen) setIsCartOpen(false);
   };
 
   const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
+    setIsCartOpen((prev) => !prev);
+    if (isSidebarOpen) setIsSidebarOpen(false);
   };
 
-  const closeCart = () => {
-    setIsCartOpen(false);
-  };
-
-  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if ((e.target as HTMLElement).closest(".cart-drawer") === null) {
-      closeCart();
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const searchQuery = (e.currentTarget.search.value || "").trim();
+    if (searchQuery) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
     }
   };
 
@@ -37,11 +33,13 @@ const Header: React.FC = () => {
       <header className="sticky top-0 left-0 w-full z-50 bg-gray-200 shadow-md">
         <div className="flex items-center justify-between max-w-screen-xl mx-auto px-4 py-4">
           {/* Logo */}
-          <div className="text-xl font-bold flex items-center">
+          <div className="text-xl font-bold flex items-center space-x-4">
             <span className="mr-2">🛍️</span>
             Commerceplate
+
+            {/* Sidebar Icon for Large Screens */}
             <button
-              className="hidden lg:block text-2xl text-gray-800 ml-4 focus:outline-none"
+              className="hidden lg:block text-2xl text-gray-800 focus:outline-none"
               onClick={toggleSidebar}
             >
               <FaBars />
@@ -50,14 +48,9 @@ const Header: React.FC = () => {
 
           {/* Search Bar (Large Screen) */}
           <div className="hidden lg:flex flex-grow items-center mx-4">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                window.location.href = "/products";
-              }}
-              className="w-full"
-            >
+            <form onSubmit={handleSearch} className="w-full">
               <input
+                name="search"
                 type="text"
                 placeholder="Search for products"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-gray-400"
@@ -68,14 +61,14 @@ const Header: React.FC = () => {
           {/* Icons */}
           <div className="hidden lg:flex items-center space-x-4">
             <FaSearch
-              className="text-lg cursor-pointer"
-              onClick={() => (window.location.href = "/products")}
+              className="text-lg cursor-pointer hover:text-gray-400"
+              onClick={() => router.push("/products")}
             />
             <FaShoppingCart
               className="text-lg cursor-pointer hover:text-gray-400"
               onClick={toggleCart}
             />
-            <Link href="/login" onClick={closeCart}>
+            <Link href="/login">
               <FaUser className="text-lg cursor-pointer hover:text-gray-400" />
             </Link>
           </div>
@@ -87,13 +80,13 @@ const Header: React.FC = () => {
             </button>
             <FaSearch
               className="cursor-pointer hover:text-gray-400"
-              onClick={() => (window.location.href = "/products")}
+              onClick={() => router.push("/products")}
             />
             <FaShoppingCart
               className="cursor-pointer hover:text-gray-400"
               onClick={toggleCart}
             />
-            <Link href="/login" onClick={closeCart}>
+            <Link href="/login">
               <FaUser className="cursor-pointer hover:text-gray-400" />
             </Link>
           </div>
@@ -101,14 +94,7 @@ const Header: React.FC = () => {
 
         {/* Search Bar (Small Screen) */}
         <div className="lg:hidden px-4 py-2">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const searchQuery = (e.target as HTMLFormElement).search.value;
-              window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
-            }}
-            className="w-full"
-          >
+          <form onSubmit={handleSearch} className="w-full">
             <input
               name="search"
               type="text"
@@ -123,17 +109,13 @@ const Header: React.FC = () => {
       {isCartOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-25 z-40"
-          onClick={handleOutsideClick}
+          onClick={toggleCart}
         >
           <div
-            className="fixed top-0 right-0 w-80 h-90 bg-white text-black shadow-lg z-50 cart-drawer"
-            style={{
-              borderTopLeftRadius: "1rem",
-              borderBottomLeftRadius: "1rem",
-            }}
+            className="fixed top-0 right-0 w-80 h-100 bg-white text-black shadow-lg z-50"
+            style={{ borderTopLeftRadius: "1rem", borderBottomLeftRadius: "1rem" }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Cart Header */}
             <div className="relative flex justify-between items-center p-4 border-b border-gray-300">
               <h2 className="text-lg font-bold">Your Cart</h2>
               <button
@@ -143,18 +125,12 @@ const Header: React.FC = () => {
                 <FaTimes />
               </button>
             </div>
-
-            {/* Cart Content */}
             <div className="p-6 flex flex-col items-center text-center">
-              <div className="mt-2 text-black">
-                <p className="text-6xl text-black mt-10 mb-5">🛒</p>
-                <p className="text-lg font-semibold">
-                  Oops. Your Bag Is Empty.
-                </p>
-              </div>
+              <p className="text-6xl mt-10 mb-5">🛒</p>
+              <p className="text-lg font-semibold">Oops. Your Bag Is Empty.</p>
               <Link href="/products">
                 <button className="mt-8 px-8 py-2 bg-black text-white rounded-lg hover:bg-gray-700">
-                  Don't Miss Out: Add Product
+                  Add Products
                 </button>
               </Link>
             </div>
@@ -163,64 +139,23 @@ const Header: React.FC = () => {
       )}
 
       {/* Sidebar */}
-      <div
-        className={`fixed inset-0 z-50 w-64 bg-gray-200 transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out`}
-      >
-        {/* Close Button */}
-        <div className="flex items-center justify-between px-4 py-4">
-          <div className="text-xl font-bold flex items-center">
-            <span className="mr-2">🛍️</span>
-            Commerceplate
-          </div>
-          <button
-            className="text-gray-800 text-2xl focus:outline-none"
-            onClick={toggleSidebar}
-          >
-            <FaTimes />
-          </button>
-        </div>
-
-        {/* Sidebar Links */}
-        <nav className="mt-4 px-4 space-y-4">
-          <Link
-            href="/home"
-            onClick={closeCart}
-            className="text-xl font-bold block hover:text-gray-400"
-          >
-            Home
-          </Link>
-          <Link
-            href="/aboutus"
-            onClick={closeCart}
-            className="text-xl font-bold block hover:text-gray-400"
-          >
-            About Us
-          </Link>
-          <Link
-            href="/products"
-            onClick={closeCart}
-            className="text-xl font-bold block hover:text-gray-400"
-          >
-            Products
-          </Link>
-          <Link
-            href="/contact"
-            onClick={closeCart}
-            className="text-xl font-bold block hover:text-gray-400"
-          >
-            Contact
-          </Link>
-        </nav>
-      </div>
-
-      {/* Backdrop */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={toggleSidebar}
-        ></div>
+          className="fixed inset-0 z-50 w-64 bg-gray-200 transform translate-x-0 transition-transform duration-300 ease-in-out"
+        >
+          <div className="flex justify-between px-4 py-4">
+            <span className="text-xl font-bold">🛍️ Commerceplate</span>
+            <button onClick={toggleSidebar} className="text-2xl">
+              <FaTimes />
+            </button>
+          </div>
+          <nav className="px-4 space-y-4">
+            <Link href="/home" className="block">Home</Link>
+            <Link href="/aboutus" className="block">About Us</Link>
+            <Link href="/products" className="block">Products</Link>
+            <Link href="/contact" className="block">Contact</Link>
+          </nav>
+        </div>
       )}
     </>
   );

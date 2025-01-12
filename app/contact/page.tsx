@@ -5,8 +5,19 @@ import Upper from "../upper"; // Header Component
 import Footer from "../footer"; // Footer Component
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+
+// Define the type for errors
+type Errors = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+};
 
 export default function Contact() {
+  // State for form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -15,30 +26,33 @@ export default function Contact() {
     message: "",
   });
 
-  const [errors, setErrors] = useState({});
+  // State for errors
+  const [errors, setErrors] = useState<Errors>({});
 
-  const handleChange = (e) => {
+  // Handle input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: "" }); // Clear error for the field being updated
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     // Validation
-    const newErrors = {};
+    const newErrors: Errors = {};
     if (!formData.firstName.trim()) newErrors.firstName = "First name is required.";
     if (!formData.email.trim()) newErrors.email = "Email is required.";
     if (!formData.subject.trim()) newErrors.subject = "Subject is required.";
     if (!formData.message.trim()) newErrors.message = "Message is required.";
-  
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      // Show success toast in top-right corner
+      // Show success toast
       toast.success("Message sent successfully!", {
-        position: "top-right",  // Change position to top-right
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -47,7 +61,8 @@ export default function Contact() {
         progress: undefined,
         theme: "light",
       });
-  
+
+      // Reset form data
       setFormData({
         firstName: "",
         lastName: "",
@@ -67,7 +82,6 @@ export default function Contact() {
         <title>Contact Us</title>
         <meta name="description" content="Contact page for getting in touch with us" />
       </Head>
-      {/* Rest of your JSX */}
 
       <h1 className="text-5xl font-bold text-center text-gray-800 mt-20">Connect with Us</h1>
 
@@ -88,13 +102,13 @@ export default function Contact() {
             <div className="bg-gray-100 p-6 rounded-lg shadow">
               <h2 className="text-xl font-semibold text-gray-800">Email</h2>
               <p className="text-base text-gray-700 mt-2">
-                <a href="mailto:yourmail@domain.com" className="text-blue-600 hover:underline">
+                <Link href="mailto:yourmail@domain.com" className="text-blue-600 hover:underline">
                   yourmail@domain.com
-                </a>
+                </Link>
                 <br />
-                <a href="mailto:support@roadthemes.com" className="text-blue-600 hover:underline">
+                <Link href="mailto:support@roadthemes.com" className="text-blue-600 hover:underline">
                   support@roadthemes.com
-                </a>
+                </Link>
               </p>
             </div>
             {/* Phone Block */}

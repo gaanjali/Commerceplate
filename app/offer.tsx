@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image"; // Importing next/image
 
 const Home: React.FC = () => {
   return (
@@ -36,9 +37,12 @@ const Home: React.FC = () => {
 
           {/* Image */}
           <div className="w-full max-w-md md:max-w-lg flex justify-center">
-            <img
-              src="./images/best-removebg-preview.png"
+            {/* Replacing <img> with <Image> */}
+            <Image
+              src="/images/best-removebg-preview.png" // Update the path if needed
               alt="Table Lamp"
+              width={450} // Specify width
+              height={450} // Specify height
               className="w-full md:w-[450px] h-auto object-contain"
             />
           </div>

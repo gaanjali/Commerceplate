@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import Link from "next/link";
 import Upper from "../upper"; // Header Component
 import Footer from "../footer"; // Footer Component
 
@@ -102,10 +103,10 @@ export default function Login() {
             </form>
 
             <p className="text-sm text-center text-gray-600 mt-6">
-              Don't have an account?{" "}
-              <a href="/register" className="text-indigo-500 hover:underline">
+              Don&apos;t have an account?{" "}
+              <Link href="/register" className="text-indigo-500 hover:underline">
                 Register
-              </a>
+              </Link>
             </p>
           </div>
         </main>

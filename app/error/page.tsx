@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function ErrorPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -20,18 +21,18 @@ export default function ErrorPage() {
         </div>
   
         {/* Message */}
-        <h1 className="text-4xl font-bold mt-6 text-gray-800">404 - Page Not Found</h1>
+        <h1 className="text-4xl font-bold mt-6 text-gray-800">404 &ndash; Page Not Found</h1>
         <p className="text-gray-600 mt-4 text-center px-4">
-          Oops! The page you're looking for doesn't exist or may have been moved.
+          Oops! The page you&apos;re looking for doesn&apos;t exist or may have been moved.
         </p>
   
         {/* Back to Home Button */}
-        <a
+        <Link
           href="/"
           className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
         >
           Back to Home
-        </a>
+        </Link>
       </div>
     );
   }

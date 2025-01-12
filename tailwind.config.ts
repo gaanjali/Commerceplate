@@ -7,12 +7,10 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
+    extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms"),       // Ensure this is installed
+    require("@tailwindcss/aspect-ratio") // Include only if installed
+  ],
 } satisfies Config;

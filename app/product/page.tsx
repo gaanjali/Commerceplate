@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Upper from "../upper"; // Importing the upper component
 import Footer from "../footer"; // Importing the footer component
+import Image from "next/image"; // Importing the Image component from Next.js
 
 const Product: React.FC = () => {
   const [checkoutMessage, setCheckoutMessage] = useState<string>("");
@@ -20,9 +21,11 @@ const Product: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0">
             {/* Product Image */}
             <div className="w-full md:w-1/2 flex justify-center">
-              <img
-                src="./images/nice1.png"
+              <Image
+                src="/images/nice1.png" // Use the correct path relative to the public directory
                 alt="Table Lamp"
+                width={500} // Define width for the image
+                height={500} // Define height for the image
                 className="w-full max-w-md md:max-w-lg object-contain"
               />
             </div>

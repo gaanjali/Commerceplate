@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image"; // Importing next/image
 
+// Define the Product type
 interface Product {
   id: number;
   name: string;
@@ -16,30 +18,35 @@ const Feature: React.FC = () => {
   const [cart, setCart] = useState<Product[]>([]); // Cart state to store products
   const [checkoutMessage, setCheckoutMessage] = useState(""); // State for the checkout message
 
+  // Modified products array to include 'quantity' in each product
   const products = [
     {
       id: 1,
       name: "Mini Desk Lamp",
       price: 500,
-      image: "./images/mini desk lamp.jpg",
+      image: "/images/mini desk lamp.jpg",
+      quantity: 0, // Add quantity property
     },
     {
       id: 2,
       name: "Hanging Lamp",
       price: 945,
-      image: "./images/Hanging lamps.jpg",
+      image: "/images/Hanging lamps.jpg",
+      quantity: 0, // Add quantity property
     },
     {
       id: 3,
       name: "Cotton Novelty Pendant",
       price: 1149,
-      image: "./images/cotton novelty.jpg",
+      image: "/images/cotton novelty.jpg",
+      quantity: 0, // Add quantity property
     },
     {
       id: 4,
       name: "Light Drum Pendant",
       price: 5800,
-      image: "./images/lamp 2.jpg",
+      image: "/images/lamp 2.jpg",
+      quantity: 0, // Add quantity property
     },
   ];
 
@@ -101,7 +108,7 @@ const Feature: React.FC = () => {
         <main className="container mx-auto px-6 py-12">
           <h1 className="text-3xl font-bold text-center mb-2">Featured Products</h1>
           <h2 className="text-base font-medium text-center text-black-800 tracking-wide">
-            Explore Today's Featured Picks!
+            Explore Today&apos;s Featured Picks!
           </h2>
           <div className="grid mt-2 grid-cols-2 pt-4 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product) => (
@@ -110,9 +117,12 @@ const Feature: React.FC = () => {
                 className="text-center border rounded-lg p-6 shadow-md group relative"
               >
                 <div className="relative">
-                  <img
+                  {/* Replacing <img> with <Image /> */}
+                  <Image
                     src={product.image}
                     alt={product.name}
+                    width={200} // Adjust width to your preference
+                    height={200} // Adjust height to your preference
                     className="mx-auto mb-4 w-48 h-48 object-contain"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition">
@@ -125,7 +135,7 @@ const Feature: React.FC = () => {
                   </div>
                 </div>
                 <h2 className="text-xl font-semibold">{product.name}</h2>
-                <p className="text-green-500 font-bold">৳ {product.price}</p>
+                <p className="text-green-500 font-bold">Rs. {product.price}</p>
               </div>
             ))}
           </div>
@@ -169,10 +179,16 @@ const Feature: React.FC = () => {
               {cart.map((item) => (
                 <div key={item.id} className="mb-4">
                   <div className="flex items-center gap-4">
-                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover" />
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={64} // Adjust width to your preference
+                      height={64} // Adjust height to your preference
+                      className="w-16 h-16 object-cover"
+                    />
                     <div className="flex-1">
                       <h3 className="font-bold">{item.name}</h3>
-                      <p>৳ {item.price}</p>
+                      <p>Rs. {item.price}</p>
                     </div>
                     <button
                       onClick={() => handleRemoveFromCart(item.id)}
@@ -202,15 +218,15 @@ const Feature: React.FC = () => {
             <div className="p-4 border-t">
               <div className="flex justify-between mb-2">
                 <span>Subtotal:</span>
-                <span>৳ {subtotal.toFixed(2)}</span>
+                <span>Rs. {subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>Taxes:</span>
-                <span>৳ {taxes.toFixed(2)}</span>
+                <span>Rs. {taxes.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold">
                 <span>Total:</span>
-                <span>৳ {total.toFixed(2)}</span>
+                <span>Rs. {total.toFixed(2)}</span>
               </div>
               <button
                 onClick={handleProceedToCheckout}

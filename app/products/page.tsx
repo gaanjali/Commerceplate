@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Upper from "../upper";
 import Footer from "../footer";
+import Image from "next/image"; // Importing the Image component from Next.js
 
 const products = [
   { id: 1, name: "Coolie Table Lamp", price: 5849, oldPrice: 6000, image: "/images/table16.jpg", category: "Table Lamps" },
@@ -12,7 +13,7 @@ const products = [
   { id: 5, name: "Emma Minimalist Tripod Floor Lamp", price: 12000, oldPrice: 12300, image: "/images/floor2.png", category: "Floor Lamps" },
   { id: 6, name: "Empire Table Lamp", price: 1700, oldPrice: 1900, image: "/images/table11.jpg", category: "Table Lamps" },
   { id: 7, name: "Round Cage Shaped Pendant", price: 490, oldPrice: 500, image: "/images/lamp 2.jpg", category: "Hanging Lamps" },
-  { id: 8, name: "Triple Ring Cotton Fabric Pendant", price: 7000, oldPrice: 7200, image: "images/cotton novelty.jpg", category: "Hanging Lamps" },
+  { id: 8, name: "Triple Ring Cotton Fabric Pendant", price: 7000, oldPrice: 7200, image: "/images/cotton novelty.jpg", category: "Hanging Lamps" },
   { id: 9, name: "Ringsta Floor Lamp", price: 4290, oldPrice: 4500, image: "/images/floor1.png", category: "Floor Lamps" },
   { id: 10, name: "Classic Floor Lamp ", price: 9099, oldPrice: 9500, image: "/images/floor3.jpg", category: "Floor Lamps" },
   { id: 11, name: " Bell Floor Lamp ", price: 8300, oldPrice: 8800, image: "/images/floor4.jpg", category: "Floor Lamps" },
@@ -136,9 +137,11 @@ export default function ProductsPage() {
                 className="border rounded-lg shadow-md hover:shadow-lg group relative transition bg-white"
               >
                 <div className="relative w-full h-64 flex items-center justify-center bg-white">
-                  <img
+                  <Image
                     src={product.image}
                     alt={product.name}
+                    layout="fill"
+                    objectFit="contain"
                     className="object-contain w-full h-full"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition">

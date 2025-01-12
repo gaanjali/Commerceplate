@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import  Header from "./header";
 import Collection from "./collection"
  import Feature from "./feature";

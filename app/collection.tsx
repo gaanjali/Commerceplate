@@ -1,101 +1,120 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+
+interface CollectionItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  itemCount: number;
+}
 
 const Collection: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const items = [
+  const collections: CollectionItem[] = [
     {
       id: 1,
-      image: "./images/hang1.jpg",
-      title: "Hanging Lamps",
-      description: "5 items",
+      name: "Featured Products",
+      imageUrl: "/images/table11.jpg",
+      itemCount: 4,
     },
     {
       id: 2,
-      image: "./images/fllor lamps.png",
-      title: "Floor Lamps",
-      description: "4 items",
+      name: "Floor Lamps",
+      imageUrl: "/images/fllor lamps.png",
+      itemCount: 4,
     },
     {
       id: 3,
-      image: "./images/lamp 1.jpg",
-      title: "Modern Lamps",
-      description: "4 items",
+      name: "Hanging Lamps",
+      imageUrl: "/images/lamp 2.jpg",
+      itemCount: 5,
     },
     {
       id: 4,
-      image: "./images/mini desk lamp.jpg",
-      title: "Table Lamps",
-      description: "4 items",
+      name: "Modern Lamps",
+      imageUrl: "/images/lamp 1.jpg",
+      itemCount: 5,
     },
-   
+    {
+      id: 5,
+      name: "Classic Lamps",
+      imageUrl: "/images/radiant.jpg",
+      itemCount: 6,
+    },
   ];
 
-  const itemsPerPage = window.innerWidth >= 1024 ? 3 : 2;
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const collectionRef = useRef<HTMLDivElement>(null);
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? items.length - itemsPerPage : prevIndex - 1
-    );
-  };
+  useEffect(() => {
+    // Check window size when component mounts
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === items.length - itemsPerPage ? 0 : prevIndex + 1
-    );
-  };
+    handleResize(); // Set initial state
+    window.addEventListener("resize", handleResize); // Update on resize
 
-  const visibleItems = items.slice(currentIndex, currentIndex + itemsPerPage);
+    // Cleanup the event listener on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="bg-gray-50 py-16">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-6">Collections</h2>
-        <div className="relative">
-          {/* Carousel */}
-          <div className="flex justify-center items-center">
-            {/* Previous Button */}
-            <button
-              onClick={handlePrev}
-              className="absolute left-0 z-10 bg-black text-white p-3 rounded-full shadow-md hover:bg-gray-700"
-            >
-              &#8592;
-            </button>
+    <div className="max-w-screen-xl mx-auto px-4 py-12 relative">
+      <h1 className="text-3xl font-bold text-center mb-8">Collections</h1>
 
-            {/* Visible Items */}
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-              {visibleItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="group bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <div className="relative">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-[200px] lg:h-[300px] object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-4 text-center">
-                    <h3 className="text-xl font-semibold">{item.title}</h3>
-                    <p className="text-gray-500">{item.description}</p>
-                  </div>
-                </div>
-              ))}
+      {/* For Small Screens: Display 2 images in a horizontal row */}
+      {isSmallScreen ? (
+        <div
+          className="block md:hidden flex space-x-6 overflow-x-auto scrollbar-hide"
+          ref={collectionRef}
+        >
+          {collections.slice(0, 3).map((collection) => (
+            <div
+              key={collection.id}
+              className="min-w-[240px] bg-white border rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex-shrink-0"
+            >
+              <Image
+                src={collection.imageUrl}
+                alt={collection.name}
+                width={200}
+                height={200}
+                className="mx-auto mb-4 w-48 h-48 object-contain"
+              />
+              <div className="p-4 text-center bg-gray-100">
+                <h2 className="text-lg font-bold">{collection.name}</h2>
+                <p className="text-gray-600">{collection.itemCount} items</p>
+              </div>
             </div>
-
-            {/* Next Button */}
-            <button
-              onClick={handleNext}
-              className="absolute right-0 z-10 bg-black text-white p-3 rounded-full shadow-md hover:bg-gray-700"
-            >
-              &#8594;
-            </button>
-          </div>
+          ))}
         </div>
-      </div>
+      ) : (
+        // For Large Screens: Display 4 images in a horizontal row
+        <div
+          className="hidden md:flex space-x-6 overflow-x-auto scrollbar-hide"
+          ref={collectionRef}
+        >
+          {collections.slice(0, 4).map((collection) => (
+            <div
+              key={collection.id}
+              className="min-w-[280px] bg-white border rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex-shrink-0"
+            >
+              <Image
+                src={collection.imageUrl}
+                alt={collection.name}
+                width={200}
+                height={200}
+                className="mx-auto mb-4 w-48 h-48 object-contain"
+              />
+              <div className="p-4 text-center bg-gray-100">
+                <h2 className="text-lg font-bold">{collection.name}</h2>
+                <p className="text-gray-600">{collection.itemCount} items</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

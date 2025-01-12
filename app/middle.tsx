@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Importing next/image
 
 const Home: React.FC = () => {
   return (
@@ -22,9 +23,12 @@ const Home: React.FC = () => {
             </Link>
           </div>
           <div className="w-full max-w-md md:max-w-lg flex justify-center">
-            <img
-              src="./images/nice1.png"
+            {/* Replacing <img> with <Image> */}
+            <Image
+              src="/images/nice1.png" // Correct path for the image
               alt="Table Lamp"
+              width={500} // Set the width of the image
+              height={500} // Set the height of the image
               className="w-full md:w-[500px] h-auto object-contain rounded-lg"
             />
           </div>

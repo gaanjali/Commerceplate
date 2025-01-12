@@ -44,8 +44,8 @@ export default function PrivacyPolicy() {
               system, cookie information, and Internet Service Provider.
             </p>
             <p className="text-base text-gray-700 leading-relaxed">
-              The term "personal data" does not include any anonymized and
-              aggregated data made on the basis of personal data, which are
+              The term &quot;personal data&quot; does not include any anonymized
+              and aggregated data made on the basis of personal data, which are
               wholly owned by Conclude.
             </p>
           </section>
@@ -58,14 +58,14 @@ export default function PrivacyPolicy() {
             <p className="text-base text-gray-700 leading-relaxed">
               The discovery was made by Richard McClintock, a professor of Latin
               at Hampden-Sydney College in Virginia, who faced the impetuous
-              recurrence of the dark word "consectetur" in the text Lorem ipsum.
+              recurrence of the dark word &quot;consectetur&quot; in the text Lorem ipsum.
               He researched its origins to identify them in sections 1.10.32 and
-              1.10.33 of the aforementioned Cicero's writings.
+              1.10.33 of the aforementioned Cicero&apos;s writings.
             </p>
             <p className="text-base text-gray-700 leading-relaxed">
               When referring to Lorem ipsum, different expressions are used,
-              namely "fill text," "fictitious text," "blind text," or
-              "placeholder text." In short, its meaning can also be zero, but
+              namely &quot;fill text,&quot; &quot;fictitious text,&quot; &quot;blind text,&quot; or
+              &quot;placeholder text.&quot; In short, its meaning can also be zero, but
               its usefulness is so clear as to be widely adopted for design and
               layout purposes.
             </p>
@@ -88,7 +88,7 @@ export default function PrivacyPolicy() {
               accusantium doloremque laudantium, totam rem aperiam eaque ipsa,
               quae ab illo inventore veritatis et quasi architecto beatae vitae
               dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas
-              sit, aspernatur aut odit aut fugit, sed quia consequuntur magni
+              sit, aspernatur aut odit  aut fugit, sed quia consequuntur magni
               dolores.
             </p>
           </section>
@@ -115,7 +115,7 @@ export default function PrivacyPolicy() {
               Type of Personal Data Collected
             </h2>
             <p className="text-base text-gray-700 mt-2  mb-12 leading-relaxed">
-              Your information may be transferred to — and maintained on —
+              Your information may be transferred to — and maintained on — 
               computers located outside of your state, province, country or
               other governmental jurisdiction where the privacy laws may not be
               as protective as those in your jurisdiction. If you choose to

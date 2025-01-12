@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 import Upper from "../upper"; // Header Component
 import Footer from "../footer"; // Footer Component
+import Link from "next/link";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -127,12 +128,12 @@ export default function Register() {
                   className="ml-2 text-sm text-gray-600"
                 >
                   I have read and agree to the{" "}
-                  <a
+                  <Link
                     href="/terms"
                     className="text-indigo-500 hover:underline"
                   >
                     Terms & Conditions
-                  </a>
+                  </Link>
                 </label>
               </div>
 
@@ -148,9 +149,9 @@ export default function Register() {
             {/* Login Link */}
             <p className="text-sm text-center text-gray-600 mt-6">
               Have an account?{" "}
-              <a href="/login" className="text-indigo-500 hover:underline">
+              <Link href="/login" className="text-indigo-500 hover:underline">
                 Login
-              </a>
+              </Link>
             </p>
           </div>
         </main>
